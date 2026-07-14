@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore.js';
 
-const baseURL = import.meta.env.VITE_API_URL || 'https://whatsapp-automation-backend-dhqk.onrender.com/api/';
+const baseURL = import.meta.env.VITE_API_URL || 'https://whatsapp-automation-backend-dhqk.onrender.com/api';
 
 export const api = axios.create({
   baseURL,
