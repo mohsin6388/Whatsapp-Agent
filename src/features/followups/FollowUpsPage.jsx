@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { CheckCircle2, SkipForward, Pencil, Save, X, Phone } from 'lucide-react';
+import { CheckCircle2, SkipForward, Pencil, Save, X, Phone, Trash2 } from 'lucide-react';
 import { followUpApi } from '../../api/followUpApi.js';
 
 const STATUS_TABS = ['pending', 'sent', 'done', 'skipped'];
@@ -32,6 +32,12 @@ export default function FollowUpsPage() {
 
   const handleAction = async (id, newStatus) => {
     await followUpApi.update(id, { status: newStatus });
+    fetchList();
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Delete this follow-up? This cannot be undone.')) return;
+    await followUpApi.remove(id);
     fetchList();
   };
 
@@ -118,16 +124,23 @@ export default function FollowUpsPage() {
                 )}
               </div>
 
-              {editingId !== f._id && status === 'pending' && (
+              {editingId !== f._id && (
                 <div className="flex flex-shrink-0 gap-1.5">
-                  <button onClick={() => startEdit(f)} className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800" title="Edit">
-                    <Pencil size={15} />
-                  </button>
-                  <button onClick={() => handleAction(f._id, 'done')} className="rounded-lg p-2 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20" title="Mark done">
-                    <CheckCircle2 size={15} />
-                  </button>
-                  <button onClick={() => handleAction(f._id, 'skipped')} className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800" title="Skip">
-                    <SkipForward size={15} />
+                  {status === 'pending' && (
+                    <>
+                      <button onClick={() => startEdit(f)} className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800" title="Edit">
+                        <Pencil size={15} />
+                      </button>
+                      <button onClick={() => handleAction(f._id, 'done')} className="rounded-lg p-2 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20" title="Mark done">
+                        <CheckCircle2 size={15} />
+                      </button>
+                      <button onClick={() => handleAction(f._id, 'skipped')} className="rounded-lg p-2 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800" title="Skip">
+                        <SkipForward size={15} />
+                      </button>
+                    </>
+                  )}
+                  <button onClick={() => handleDelete(f._id)} className="rounded-lg p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+                    <Trash2 size={15} />
                   </button>
                 </div>
               )}

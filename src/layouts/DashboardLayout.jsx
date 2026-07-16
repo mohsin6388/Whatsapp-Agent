@@ -26,8 +26,8 @@ const NAV_ITEMS = [
   { to: '/conversations', label: 'Conversations', icon: MessageSquare },
   { to: '/site-visits', label: 'Site Visits', icon: CalendarCheck },
   { to: '/follow-ups', label: 'Follow Ups', icon: Clock },
-  { to: '/whatsapp', label: 'WhatsApp', icon: Smartphone },
-  { to: '/analytics', label: 'Analytics', icon: BarChart3 },
+  // { to: '/whatsapp', label: 'WhatsApp', icon: Smartphone },
+  // { to: '/analytics', label: 'Analytics', icon: BarChart3 },
   { to: '/settings', label: 'Settings', icon: SettingsIcon },
   { to: '/profile', label: 'Profile', icon: UserCircle },
 ];
@@ -131,7 +131,7 @@ export default function DashboardLayout() {
               </span>
               <div className="hidden text-right sm:block">
                 <p className="text-sm font-semibold text-ink-900 dark:text-white">{user?.name}</p>
-                <p className="text-xs capitalize text-ink-500 dark:text-ink-400">{user?.role}</p>
+                
               </div>
             </div>
           </div>

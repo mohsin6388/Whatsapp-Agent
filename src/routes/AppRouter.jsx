@@ -11,7 +11,6 @@ import ForgotPasswordPage from '../features/auth/ForgotPasswordPage.jsx';
 import ResetPasswordPage from '../features/auth/ResetPasswordPage.jsx';
 
 import DashboardPage from '../features/dashboard/DashboardPage.jsx';
-import ComingSoon from '../components/ComingSoon.jsx';
 import FollowUpsPage from '../features/followups/FollowUpsPage.jsx';
 
 
@@ -25,6 +24,8 @@ import WhatsAppPage from '../features/whatsapp/WhatsAppPage.jsx';
 import ConversationsPage from '../features/conversations/ConversationsPage.jsx';
 import AnalyticsPage from '../features/analytics/AnalyticsPage.jsx';
 import SiteVisitsPage from '../features/meetings/SiteVisitsPage.jsx';
+import SettingsPage from '../features/settings/SettingsPage.jsx';
+import ProfilePage from '../features/profile/ProfilePage.jsx';
 
 
 
@@ -43,7 +44,7 @@ export default function AppRouter() {
         const { data } = await authApi.refresh();
         const me = await authApi.me();
         useAuthStore.getState().setAccessToken(data.accessToken);
-        setSession(me.data, data.accessToken);
+        setSession(me.data.user, data.accessToken);
       } catch (err) {
         markAuthReady();
       }
@@ -64,24 +65,19 @@ export default function AppRouter() {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
+          {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
+          <Route path="/dashboard" element={<AnalyticsPage />} />
           <Route path="/leads" element={<LeadsPage />} />
           <Route path="/properties" element={<PropertiesPage />} />
-          <Route path="/whatsapp" element={<WhatsAppPage />} />
+          {/* <Route path="/whatsapp" element={<WhatsAppPage />} /> */}
           <Route path="/conversations" element={<ConversationsPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          {/* <Route path="/analytics" element={<AnalyticsPage />} /> */}
           <Route path="/follow-ups" element={<FollowUpsPage />} />
           <Route path="/site-visits" element={<SiteVisitsPage />} />
 
 
-          {/* <Route path="/properties" element={<ComingSoon title="Properties" phase="Phase 2" />} /> */}
-          {/* <Route path="/conversations" element={<ComingSoon title="Conversations" phase="Phase 4 & 6" />} /> */}
-          {/* <Route path="/site-visits" element={<ComingSoon title="Site Visits" phase="Phase 5" />} /> */}
-          {/* <Route path="/follow-ups" element={<ComingSoon title="Follow Ups" phase="Phase 5" />} /> */}
-          {/* <Route path="/whatsapp" element={<ComingSoon title="WhatsApp" phase="Phase 3" />} /> */}
-          {/* <Route path="/analytics" element={<ComingSoon title="Analytics" phase="Phase 7" />} /> */}
-          <Route path="/settings" element={<ComingSoon title="Settings" phase="Phase 8" />} />
-          <Route path="/profile" element={<ComingSoon title="Profile" phase="Phase 8" />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
       </Route>
 
